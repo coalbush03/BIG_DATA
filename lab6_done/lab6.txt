@@ -1,0 +1,35 @@
+Architektura Big Data dla Rockstar Games dotycząca raportowania błędów w grze.
+1.	Input:
+
+Azure Event Hub – przesyłamy tam Logi gier zapisane w formie np. plików json 
+Odbiera strumienie danych w czasie rzeczywistym i obsługuje miliony zdarzeń na sekundę z niską latencją
+
+Azure Logic Apps  - Automatyczne zbieranie opinii graczy 
+Pozwala na tworzenie zautomatyzowanych działań. Będzie zbierać dane niestrukturalne np. z forów. Nie wymaga kodu i przy pomocy requestów http zbiera dane np. z api forów.
+
+2.	Przetwarzanie:
+
+Azure Stream Analytics – wykrywanie anomalii w czasie rzeczywistym
+Pobiera dane z event hubs i wysyła dalej alerty (np. do Functions/Power BI).
+Pozwala na użycie SQL i przetwarzanie sporych ilości danych z niską latencją. Można utworzyć pipeline do analizy wzorców i potrzebnego nam wykrywania problemów, które będą raportowane do dalszych elementów architektury.
+
+Azure Functions – automatycznie tworzy zgłoszenia np. w Jira
+Odbiera Alerty ze stream analytics i tworzy ticket w jira. Usługa jest bezserwerowa (tańsza) i obsługuje wiele języków
+
+Azure Databricks (Spark) – Bardziej zaawansowana analiza danych
+Uruchamia Spark Job, który będzie dokonywał analizy.  Platforma pozwala na łatwą obsługę i analizę danych
+
+3.	Przechowywanie:
+
+Data Lake Storage Gen2 – główny magazyn danych dla np. logów
+Główny magazyn surowych danych. Partycjonowane wg daty. Pozwala na gromadzenie danych bez dostosowywania ich do istniejącej struktury. Pozwala na hierarchiczną strukturę katalogów, zoptymalizowany koszt i wydajność i dużą skalowalność.
+Cosmos DB – przechowywanie metadanych
+Zapewnia bardzo szybki dostęp do danych.
+
+4.	Wizualizacja:
+
+Power BI – wykresy obrazujące występowanie błędów i stan serwerów 
+Automatycznie tworzy dashboardy. Pozwala na stworzenie estetycznych i łatwoczytelnych wykresów z podanych danych, które będą przekazywane do aplikacji.
+
+
+
